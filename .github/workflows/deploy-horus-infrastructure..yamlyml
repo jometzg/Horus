@@ -1,0 +1,24 @@
+on: [workflow_dispatch]
+ 
+name: Deploy Infrastructure
+env:
+  APPLICATION_NAME: horus
+  LOCATION: uksouth  
+  SUPPRESS_PROMPT: True
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+   
+      - name: Run Deployment Scripts
+        run: |
+                chmod +x Horus.Functions/Infrastructure/create_infra.sh
+                Horus.Functions/Infrastructure/create_infra.sh
